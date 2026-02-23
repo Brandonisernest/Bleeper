@@ -5,7 +5,7 @@ A personal tool that automatically finds and removes curse words from podcast MP
 
 ## 📁 Files in this folder
 - **bleep.py** — the main script that does all the work
-- **inspect.py** — debugging tool to see what Whisper heard at a specific timestamp
+- **detective.py** — debugging tool to see what Whisper heard at a specific timestamp
 - **wordlist.txt** — your master list of words to bleep
 - **README.md** — this file!
 
@@ -76,22 +76,22 @@ These need to be installed on your Mac (you already did this!):
 
 ---
 
-## 🔍 Debugging missed words (inspect.py)
+## 🔍 Debugging missed words (detective.py)
 If the script missed a word, use the inspector to see exactly what Whisper heard at that timestamp:
 
 **Using mm:ss format:**
 ```
-python3 inspect.py yourpodcast.mp3 35:46
+python3 detective.py yourpodcast.mp3 35:46
 ```
 
 **Using seconds:**
 ```
-python3 inspect.py yourpodcast.mp3 2146
+python3 detective.py yourpodcast.mp3 2146
 ```
 
 **Show a wider window around the timestamp (default is 30 seconds each side):**
 ```
-python3 inspect.py yourpodcast.mp3 35:46 --window 60
+python3 detective.py yourpodcast.mp3 35:46 --window 60
 ```
 
 It'll print every word Whisper heard around that moment. If Whisper misheared the word, just add what it *actually* transcribed to your wordlist instead!
