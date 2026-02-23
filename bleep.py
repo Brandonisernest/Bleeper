@@ -9,6 +9,8 @@ Usage:
     python3 bleep.py podcast.mp3
     python3 bleep.py podcast.mp3 --mode silence
     python3 bleep.py podcast.mp3 --mode bleep
+    python3 bleep.py podcast.mp3 --model medium
+    python3 bleep.py podcast.mp3 --mode silence --model small
 """
 
 import sys
@@ -24,8 +26,6 @@ from pydub.generators import Sine
 WORDLIST_FILE = "wordlist.txt"   # lives in the same folder as this script
 PADDING_MS    = 80               # extra ms to mute on each side of a word
 BLEEP_FREQ_HZ = 1000             # tone frequency for bleep mode
-WHISPER_MODEL = "base"           # tiny / base / small / medium / large
-                                 # (base is a good balance of speed & accuracy)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -68,10 +68,17 @@ def main():
         default="bleep",
         help="Replace flagged words with 'bleep' tone or 'silence' (default: bleep)",
     )
+    parser.add_argument(
+        "--model",
+        choices=["tiny", "base", "small", "medium", "large"],
+        default="base",
+        help="Whisper model size — larger = more accurate but slower (default: base)",
+    )
     args = parser.parse_args()
 
     input_path = args.input
     mode       = args.mode
+    whisper_model = args.model
 
     if not os.path.exists(input_path):
         print(f"❌  File not found: {input_path}")
@@ -93,8 +100,8 @@ def main():
     print(f"📋  Loaded {len(banned)} word(s) from wordlist.")
 
     # ── Step 2: Transcribe ────────────────────────────────────────────────────
-    print(f"🎙️  Loading Whisper model '{WHISPER_MODEL}' …")
-    model = whisper.load_model(WHISPER_MODEL)
+    print(f"🎙️  Loading Whisper model '{whisper_model}' …")
+    model = whisper.load_model(whisper_model)
 
     print(f"🔍  Transcribing '{input_path}' … (this may take a while for long files)")
     result = model.transcribe(input_path, word_timestamps=True)

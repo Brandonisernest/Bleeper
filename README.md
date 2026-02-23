@@ -35,6 +35,16 @@ python3 bleep.py yourpodcast.mp3
 python3 bleep.py yourpodcast.mp3 --mode silence
 ```
 
+**With a more accurate (but slower) model:**
+```
+python3 bleep.py yourpodcast.mp3 --model medium
+```
+
+**Combining options:**
+```
+python3 bleep.py yourpodcast.mp3 --mode silence --model small
+```
+
 ### Step 5: Wait for it to finish
 A 2+ hour podcast takes roughly 20-40 minutes. Terminal will print each word it finds as it goes. Don't close Terminal while it's running!
 
@@ -60,9 +70,10 @@ If you open `bleep.py` you'll see these settings near the top that you can tweak
 
 | Setting | Default | What it does |
 |---|---|---|
-| `WHISPER_MODEL` | `base` | AI model size. `small` or `medium` = more accurate but slower |
 | `PADDING_MS` | `80` | Extra milliseconds muted on each side of a word |
 | `BLEEP_FREQ_HZ` | `1000` | The frequency (pitch) of the bleep tone |
+
+The Whisper model is now set via `--model` on the command line instead!
 
 ---
 
@@ -92,6 +103,11 @@ python3 detective.py yourpodcast.mp3 2146
 **Show a wider window around the timestamp (default is 30 seconds each side):**
 ```
 python3 detective.py yourpodcast.mp3 35:46 --window 60
+```
+
+**Use a more accurate model for inspection:**
+```
+python3 detective.py yourpodcast.mp3 35:46 --model medium
 ```
 
 It'll print every word Whisper heard around that moment. If Whisper misheared the word, just add what it *actually* transcribed to your wordlist instead!

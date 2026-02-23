@@ -6,9 +6,10 @@ Shows exactly what Whisper heard around a specific timestamp.
 Useful for debugging why a word was missed!
 
 Usage:
-    python3 inspect.py podcast.mp3 35:46
-    python3 inspect.py podcast.mp3 2146
-    python3 inspect.py podcast.mp3 35:46 --window 60
+    python3 detective.py podcast.mp3 35:46
+    python3 detective.py podcast.mp3 2146
+    python3 detective.py podcast.mp3 35:46 --window 60
+    python3 detective.py podcast.mp3 35:46 --model medium
 """
 
 import sys
@@ -47,6 +48,12 @@ def main():
         default=30,
         help="How many seconds before and after the timestamp to show (default: 30)"
     )
+    parser.add_argument(
+        "--model",
+        choices=["tiny", "base", "small", "medium", "large"],
+        default="base",
+        help="Whisper model size — larger = more accurate but slower (default: base)",
+    )
     args = parser.parse_args()
 
     center = parse_timestamp(args.timestamp)
@@ -59,7 +66,7 @@ def main():
     print(f"{'Timestamp':<12} {'Word':<20}")
     print("-" * 32)
 
-    model = whisper.load_model("base")
+    model = whisper.load_model(args.model)
     result = model.transcribe(args.input, word_timestamps=True)
 
     found_any = False
