@@ -4,10 +4,37 @@ A personal tool that automatically finds and removes curse words from podcast MP
 ---
 
 ## 📁 Files in this folder
-- **bleep.py** — the main script that does all the work
+- **bleep.py** — audio bleeper (MP3 files)
+- **bleepvideo.py** — video bleeper (MP4 files and URLs)
 - **detective.py** — debugging tool to see what Whisper heard at a specific timestamp
-- **wordlist.txt** — your master list of words to bleep
+- **wordlist.txt** — your master list of words to bleep (shared by both scripts)
 - **README.md** — this file!
+
+---
+
+## 🎬 Video Bleeper (bleepvideo.py)
+
+First, install yt-dlp if you haven't already (needed for URLs):
+```
+brew install yt-dlp
+```
+
+**Local video file:**
+```
+python3 bleepvideo.py myvideo.mp4
+```
+
+**YouTube or archive.org URL:**
+```
+python3 bleepvideo.py https://www.youtube.com/watch?v=XXXXX
+```
+
+**With options:**
+```
+python3 bleepvideo.py myvideo.mp4 --mode bleep --model medium
+```
+
+The clean video will be saved as `myvideo_clean.mp4` next to the original. Default mode is **silence** (cleaner for video). The original file is never modified.
 
 ---
 
