@@ -6,14 +6,42 @@ A personal tool that automatically finds and removes curse words from podcast MP
 ## 📁 Files in this folder
 - **bleep.py** — audio bleeper (MP3 files)
 - **bleepvideo.py** — video bleeper (MP4 files and URLs)
+- **bleepbatch.py** — batch bleeper (processes a whole folder at once)
 - **detective.py** — debugging tool to see what Whisper heard at a specific timestamp
-- **wordlist.txt** — your master list of words to bleep (shared by both scripts)
+- **wordlist.txt** — your master list of words to bleep (shared by all scripts)
 - **README.md** — this file!
 
 ---
 
 ## ⚠️ Important: Always use python3.11
 This project runs on **Python 3.11**. Always use `python3.11` instead of just `python3` for every command in this README. This is because Python 3.14 (the default on this Mac) has compatibility issues with pydub.
+
+---
+
+## 📦 Batch Bleeper (bleepbatch.py)
+Drop all your files into one folder and process them all in one command. Automatically detects audio vs video. Runs 2 passes per file by default to catch stragglers!
+
+**Basic usage — point at a folder:**
+```
+python3.11 bleepbatch.py "/path/to/your/folder"
+```
+
+**Change number of passes:**
+```
+python3.11 bleepbatch.py "/path/to/folder" --passes 1
+python3.11 bleepbatch.py "/path/to/folder" --passes 3
+```
+
+**With options:**
+```
+python3.11 bleepbatch.py "/path/to/folder" --mode bleep --model medium
+```
+
+Supported file types: `.mp3` `.m4a` `.wav` `.flac` `.mp4` `.mkv` `.mov` `.avi` `.webm`
+
+Clean files are saved next to their originals with `_clean` in the name. Already-cleaned files (with `_clean` in the name) are automatically skipped so you never accidentally double-process!
+
+---
 
 ---
 
